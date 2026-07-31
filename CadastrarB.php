@@ -1,20 +1,32 @@
 
 <?php
-    require_once "Banco.php";
-    $ClasseConexao = new Conexao();
-    $Conexao = $ClasseConexao->Conectar();
+    require_once "ConexaoBanco.php";
+    $ObjBanco = new Conexao();
+    $Conexao = $ObjBanco->Conectar();
 
-    $CodFornecedor = $_GET["CodFornecedor"];
-    $Nome = $_GET["RazaoSocial"];
-    $Pais = $_GET["PaisOrigem"];
-   
-    $Instrucao = $Conexao->prepare("Call SpCadastrarFornecedor(?,?,?)");
-    $Instrucao->bind_param("iss",
-        $CodFornecedor,
-        $Nome,
-        $Pais
+    $Codigo = $_GET["CodProduto"];
+    $Produto = $_GET["Produto"];
+
+    $Instrucao = $Conexao->prepare("Call spCadastrarProduto(?,?)");
+    $Instrucao->bind_param(
+        "is",
+        $Codigo,
+        $Produto
     );
-    
     $Instrucao->execute();
+
+    $DadosColetado = $Instrucao->get_result();
+    $RegistroBanco = $DadosColetado->fetch_assoc();
+
+    if($RegistroBanco["RETORNO" == "CADASTROU"])
+    {
+        echo "CADASTROU";
+    }
+    else{
+        echo "FALHA";
+    }
+
+    $Conexao->close();
+    $Instrucao->close();
 
 ?>
