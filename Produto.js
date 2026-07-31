@@ -24,8 +24,31 @@ class Produto {
     }
     // Cadastrar.
     CadastrarProduto(){
+        // Atribuir os valores para o atributo encapsulado.
+        this.#CodProduto = TxtCodProduto.value;
+        this.#Produto = TxtProduto.value;
 
+        // Fazendo a requisição para o arquivo php.
+        fetch(
+            `CadastrarProduto.php?` +
+            `CodProduto=${encodeURIComponent(this.#CodProduto)}` +
+            `&Produto=${encodeURIComponent(this.#Produto)}`
+        )
+
+        
+fetch(url)
+    .then(RespObj => RespObj.text())
+    .then(RespObj => {
+        console.log("Resposta do PHP:", RespObj);
+
+        if (RespObj.trim() == "Cadastrado") {
+            alert("Cadastrou");
+            ObjProduto.IniciaLimpaComponente();
+        }
+    });
     }
+//==============================================================================================================
+// Fim da Classe Produto.    
 }
 
 // =================================================================
@@ -42,6 +65,5 @@ class Produto {
 // =================================================================
 // Acionar evento correspondente quando o componente for acionado na pagina.
 BtnCadastrar.addEventListener("click", function() {
-    alert("Funcionou !!");
-    ObjProduto.IniciaLimpaComponente();
+    ObjProduto.CadastrarProduto();
 });
