@@ -1,6 +1,8 @@
 
 <?php
    
+   // http://localhost/TreinoProgramacao/CadastrarProduto.php?CodProduto=7228&Produto=Playstation%205%20Pro
+   
     require_once "ConexaoBanco.php";  // Referenciar Conexao com o banco.
     $objBanco = new Conexao(); // referenciar objeto conexao.
     $Conexao = $objBanco->Conectar(); // referenciar o método conexão.
@@ -10,9 +12,9 @@
     $Produto = $_GET["Produto"];
 
     //testando á programação.
-    echo $CodProduto;
-    echo "<br>";
-    echo $Produto;
+    //echo $CodProduto;
+    //echo "<br>";
+    //echo $Produto;
 
     // Chamar a procedure e prepara - la para receber os parametros.
     $Instrucao = $Conexao->prepare("Call spCadastrarProduto(?,?)");
@@ -24,11 +26,11 @@
         $Produto
     );
     $Instrucao->execute(); // Executar á instrução e a procedure.
-    $Resultado = $Instrucao->get_result(); // Coletar feadback banco.
-    $Verificar = $Resultado->fetch_assoc(); // Organizar para verificação.
+    $DadosBanco = $Instrucao->get_result(); // Coletar feadback banco.
+    $ResultBanco = $DadosBanco->fetch_assoc(); // Organizar para verificação.
 
     // Verificar resposta.
-    if($Verificar["RETORNO"] == "CADASTROU")
+    if($ResultBanco["RETORNO"] == "CADASTROU")
         {echo "Cadastrado";}
     else
         {echo "Falha";
