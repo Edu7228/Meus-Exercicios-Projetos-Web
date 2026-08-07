@@ -29,24 +29,24 @@ class Produto {
         this.#Produto = TxtProduto.value;
 
         // Fazendo a requisição para o arquivo php.
-        fetch(
-            `CadastrarProduto.php?` +
-            `CodProduto=${encodeURIComponent(this.#CodProduto)}` +
-            `&Produto=${encodeURIComponent(this.#Produto)}`
-        )
+fetch(
+    `CadastrarProduto.php?` +
+    `CodProduto=${encodeURIComponent(this.#CodProduto)}` +
+    `&Produto=${encodeURIComponent(this.#Produto)}`
+)
 
-        
-fetch(url)
-    .then(RespObj => RespObj.text())
-    .then(RespObj => {
-        console.log("Resposta do PHP:", RespObj);
+.then(resp => resp.text())
+.then(resp => {
 
-        if (RespObj.trim() == "Cadastrado") {
-            alert("Cadastrou");
-            ObjProduto.IniciaLimpaComponente();
-        }
-    });
+    if (resp.trim() === "Cadastrado") {
+        alert("Cadastro realizado com Sucesso!!");
+        ObjProduto.IniciaLimpaComponente();
+    } else {
+        alert("Resposta do PHP: " + resp);
     }
+});
+
+}
 //==============================================================================================================
 // Fim da Classe Produto.    
 }
